@@ -53,6 +53,8 @@ MAKEOPTS="-j5"
 ACCEPT_LICENSE="* -@EULA"
 ```
 
+**NOTA:** La licencia "EULA" permitirá instalar linux-firmware que tontiene drivers no libres.
+
 
 `cp -L /etc/resolv.conf /mnt/gentoo/etc/`
 
