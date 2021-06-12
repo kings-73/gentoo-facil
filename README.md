@@ -4,6 +4,8 @@ Se utilizará el demonio OpenRC y no Systemd debido a que Gentoo es el que usa p
 
 Por último, para esta guía se infiere que el disco duro para la instalación será /dev/sda.
 
+Estoy conciente que uno de los puntos fuertes de Gentoo es la compilación manual y personalizado de un kernel, pero en esta guía pretende que el usuario se familiarize con la instalación general de gentoo. Como si se tratase de una instalación de archlinux. Y posterior a ello, el usuario pueda realizar una instalación avanzada.
+
 ### **1. Crear Partciones, Sistema de Archivos y Formatear**
 
 `cfdisk /dev/sda`
