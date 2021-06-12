@@ -9,7 +9,7 @@ Esta guía proporciona los pasos para una instalación gentoo, lo más sencilla 
 
 ```
 dev/sda1; Tipo: Efi system; Tamaño: 150M
-dev/sda2; Tipo: Linux swap; Tamaño 2G
+dev/sda2; Tipo: Linux swap; Tamaño: 2G
 dev/sda3; Tipo: Linux file system; Tamaño: Resto del disco
 ```
 
