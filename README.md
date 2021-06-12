@@ -1,9 +1,12 @@
 # Guía de instalación Gentoo lo más sencilla posible
 Esta guía proporciona los pasos para una instalación gentoo, lo más sencilla y genérica posible. Se usará para arquitectura 64bits y arranque EFI.
+Se utilizará el demonio OpenRC y no Systemd debido a que Gentoo es el que usa por default y no por preferencia personal. Así mismo el perfil de escritorio será "desktop" y no gnome o kde, para poder decidir más adelante el escritorio de su preferencia.
+
+Por último, para esta guía se infiere que el disco duro para la instalación será /dev/sda.
 
 ### **1. Crear Partciones, Sistema de Archivos y Formatear**
 
-`cfdisk /dev/sdb`
+`cfdisk /dev/sda`
 
 **NOTA:** Si el disco no cuenta con tabla de particiones seleccione GPT (GUID Partition Table).
 
