@@ -28,11 +28,7 @@ dev/sda3; Tipo: Linux file system; Tamaño: Resto del disco
 
 `swapon /dev/sda2`
 
-`mkdir /mnt/gentoo`
-
 `mount /dev/sda3 /mnt/gentoo`
-
-`mkdir /mnt/gentoo/boot`
 
 `mount /dev/sda1 /mnt/gentoo/boot`
 
@@ -45,9 +41,11 @@ dev/sda3; Tipo: Linux file system; Tamaño: Resto del disco
 
 `cd /mnt/gentoo`
 
-`wget https://bouncer.gentoo.org/fetch/root/all/releases/amd64/autobuilds/20210602T214502Z/stage3-amd64-20210602T214502Z.tar.xz`
+`links https://www.gentoo.org/downloads`
 
-`tar -xpvf stage3-amd64-20210602T214502Z.tar.xz --numeric-owner --xattrs-include="*.*"`
+`tar -xpvf stage3-*.tar.xz --numeric-owner --xattrs-include="*.*"`
+
+**NOTA:** Sustituya el * por el nombre completo del stage.
 
 `nano -w /mnt/gentoo/etc/portage/make.conf`
 
@@ -61,7 +59,7 @@ ACCEPT_LICENSE="* -@EULA"
 **NOTA:** La licencia "EULA" permitirá instalar linux-firmware que tontiene drivers no libres.
 
 
-`cp -L /etc/resolv.conf /mnt/gentoo/etc/`
+`cp --dereference /etc/resolv.conf /mnt/gentoo/etc/`
 
 `mount --types proc /proc /mnt/gentoo/proc`
 
@@ -73,7 +71,12 @@ ACCEPT_LICENSE="* -@EULA"
 
 `mount --make-rslave /mnt/gentoo/dev`
 
-`chroot /mnt/gentoo /bin/bash && source /etc/profile && export PS1="(chroot) ${PS1}"`
+
+`chroot /mnt/gentoo /bin/bash`
+
+`source /etc/profile`
+
+`export PS1="(chroot) ${PS1}"`
 
 
 ### **3. Configurar Portage y Elegir perfil**
@@ -105,8 +108,6 @@ ACCEPT_LICENSE="* -@EULA"
 
 **NOTA:** De igual manera, cambia el valor "4" por el correspondiente.
 
-`env-update && source /etc/profile && export PS1="(chroot) ${PS1}"`
-
 
 **5. Configurar el Nucleo Linux y Fstab**
 
@@ -132,15 +133,17 @@ ACCEPT_LICENSE="* -@EULA"
 
 `emerge --ask sys-kernel/genkernel`
 
+`emerge --ask sys-kernel/linux-firmware`
+
 `genkernel all`
 
 `nano -w /etc/fstab`
 
 ```
 -* archivo fstab *-
-/dev/sdb1  boot  vfat  noatime  0 0
-/dev/sdb2  none  swap  sw       0 0
-/dev/sdb3  /     ext4  noatime  0 1
+/dev/sda1  boot  vfat  noatime  0 0
+/dev/sda2  none  swap  sw       0 0
+/dev/sda3  /     ext4  noatime  0 1
 ```
 
 
@@ -151,7 +154,7 @@ ACCEPT_LICENSE="* -@EULA"
 **NOTA:** Si desea comprobar que el texto fue escrito en make.conf escriba: `cat /etc/portage/make.conf`
 
 
-`emerge --ask --verbose sys-boot/grub:2`
+`emerge -av sys-boot/grub:2`
 
 `grub-install --target=x86_64-efi --efi-directory=/boot`
 
@@ -203,8 +206,6 @@ keymap="es"
 
 `emerge -av sys-apps/pciutils`
 
-`emerge -av app-portage/gentoolkit`
-
 `emerge -av app-admin/sudo`
 
 
@@ -213,12 +214,9 @@ keymap="es"
 **NOTA:** wpa_supplicant para uso de red wifi.
 
 
-`emerge -av sys-boot/os-prober sys-fs/ntfs3g`
-
-**NOTA:** Si tiene una partición windows os-prober nos permitirá detectarla y agregarla al grub. Los pasos se realizarán después de la instalación.
-
-
 ### **9. Password ROOT y salir del sistema**
+
+`passwd`
 
 `exit`
 
