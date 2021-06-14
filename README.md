@@ -30,8 +30,6 @@ dev/sda3; Tipo: Linux file system; Tamaño: Resto del disco
 
 `mount /dev/sda3 /mnt/gentoo`
 
-`mount /dev/sda1 /mnt/gentoo/boot`
-
 
 ### **2. Instalar el Stage comprimido y Enjaulamiento**
 
@@ -98,7 +96,7 @@ ACCEPT_LICENSE="* -@EULA"
 
 `emerge --config sys-libs/timezone-data`
 
-`echo "es_MX.UTF-8 UTF-8" /etc/locale.gen`
+`echo "es_MX.UTF-8 UTF-8" > /etc/locale.gen`
 
 `locale-gen`
 
