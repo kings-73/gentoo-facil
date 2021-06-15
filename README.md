@@ -119,7 +119,7 @@ ACCEPT_LICENSE="* -@EULA"
 
 **NOTA:** el comando "ls -l" muestra el enlace simbólico a linux hecho por portage. En caso de no tenerlo realizarlo manualmente con los siguientes comandos:
 
--* Apéndice para crear enlace simbólico a linux *-
+### **(Opcional) sólo en caso que no aparezca enlace simbólico**
 
 `cd /usr/src`
 
@@ -130,8 +130,8 @@ ACCEPT_LICENSE="* -@EULA"
 `cd`
 
 **NOTA:** Sustituya "linux-5.10.27-gentoo" por el valor que arroje el comando "ls".
--* Fin del Apéndice*-
 
+### **Compilación del núcleo linux**
 
 `emerge --ask sys-kernel/genkernel`
 
