@@ -69,6 +69,7 @@ ACCEPT_LICENSE="* -@EULA"
 
 `mount --make-rslave /mnt/gentoo/dev`
 
+### **Entrar al nuevo entorno**
 
 `chroot /mnt/gentoo /bin/bash`
 
