@@ -151,7 +151,7 @@ ACCEPT_LICENSE="* -@EULA"
 
 ### **6. Instalacion de GRUB EFI**
 
-`echo 'GRUB_PLATFORMS="efi-64"' >> /etc/portage/make.conf`
+`echo 'GRUB_PLATFORMS="efi-64"' > /etc/portage/make.conf`
 
 **NOTA:** Si desea comprobar que el texto fue escrito en make.conf escriba: `cat /etc/portage/make.conf`
 
