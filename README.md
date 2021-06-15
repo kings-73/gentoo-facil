@@ -139,6 +139,8 @@ ACCEPT_LICENSE="* -@EULA"
 
 `genkernel all` ó `genkernel --menuconfig all`
 
+**NOTA:** genkernel all para compilación completa (nuevos usuarios) ó genkernel --menuconfig all para usuarios experimentados que conozcan su harwware.
+
 `nano -w /etc/fstab`
 
 ```
