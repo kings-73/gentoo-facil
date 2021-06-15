@@ -6,7 +6,7 @@ Para esta guía se infiere que el disco duro para la instalación será /dev/sda
 
 Por último, estoy conciente que uno de los puntos fuertes de Gentoo es la compilación manual y personalizado de un kernel, pero en esta guía pretende que el usuario se familiarize con la instalación general de gentoo, como si se tratase de una instalación de archlinux. Y posterior a ello, el usuario pueda realizar una instalación personalizada y más profunda.
 
-### **1. Crear Partciones, Sistema de Archivos y Formatear**
+## **1. Crear Partciones, Sistema de Archivos y Formatear**
 
 `cfdisk /dev/sda`
 
@@ -18,6 +18,7 @@ dev/sda2; Tipo: Linux swap; Tamaño: 2G
 dev/sda3; Tipo: Linux file system; Tamaño: Resto del disco
 ```
 
+### Formateo de particiones
 
 `mkfs.fat -F 32 /dev/sda1`
 
@@ -25,13 +26,13 @@ dev/sda3; Tipo: Linux file system; Tamaño: Resto del disco
 
 `mkfs.ext4 /dev/sda3`
 
+### Montaje de partición swap y gentoo
 
 `swapon /dev/sda2`
 
 `mount /dev/sda3 /mnt/gentoo`
 
-
-### **2. Instalar el Stage comprimido y Enjaulamiento**
+## **2. Instalar el Stage comprimido y Enjaulamiento**
 
 `date 061222002021`
 
@@ -56,7 +57,6 @@ ACCEPT_LICENSE="* -@EULA"
 
 **NOTA:** La licencia "EULA" permitirá instalar linux-firmware que tontiene drivers no libres.
 
-
 `cp --dereference /etc/resolv.conf /mnt/gentoo/etc/`
 
 `mount --types proc /proc /mnt/gentoo/proc`
@@ -76,8 +76,11 @@ ACCEPT_LICENSE="* -@EULA"
 
 `export PS1="(chroot) ${PS1}"`
 
+### **Montar partición de arranque**
 
-### **3. Configurar Portage y Elegir perfil**
+`mount /dev/sda1 /boot`
+
+## **3. Configurar Portage y Elegir perfil**
 
 `emerge-webrsync -v`
 
@@ -90,7 +93,7 @@ ACCEPT_LICENSE="* -@EULA"
 **NOTA:** Cambia el valor "5" por el deseado.
 
 
-**4. Zona Horaria**
+## **4. Zona Horaria**
 
 `echo "America/Mexico_City" > /etc/timezone`
 
@@ -107,7 +110,7 @@ ACCEPT_LICENSE="* -@EULA"
 **NOTA:** De igual manera, cambia el valor "4" por el correspondiente.
 
 
-**5. Configurar el Nucleo Linux y Fstab**
+## **5. Configurar el Nucleo Linux y Fstab**
 
 `emerge --ask sys-kernel/gentoo-sources`
 
