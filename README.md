@@ -137,7 +137,7 @@ ACCEPT_LICENSE="* -@EULA"
 
 `emerge --ask sys-kernel/linux-firmware`
 
-`genkernel all`
+`genkernel all` ó `genkernel --menuconfig all`
 
 `nano -w /etc/fstab`
 
