@@ -1,10 +1,10 @@
 # Guía de instalación Gentoo lo más sencilla posible
 Esta guía proporciona los pasos para una instalación gentoo, lo más sencilla y genérica posible. La arquitectura será 64bits y para un arranque EFI.
-Se utilizará el demonio OpenRC y no Systemd debido a que en Gentoo se usa por default, y no por preferencia personal. Así mismo el perfil de escritorio será "desktop" y no gnome o kde, para poder decidir más adelante el escritorio de su preferencia.
+Se utilizará el demonio OpenRC y no Systemd debido a que en Gentoo se usa por default, y no por preferencia personal. Así mismo el perfil de escritorio será el "default" y no gnome o kde, para poder decidir más adelante el escritorio de su preferencia.
 
-Para esta guía se infiere que el disco duro para la instalación será /dev/sda.
+Para esta guía se infiere que el disco duro para la instalación será /dev/sdb.
 
-Por último, estoy conciente que uno de los puntos fuertes de Gentoo es la compilación manual y personalizado de un kernel, pero en esta guía pretende que el usuario se familiarize con la instalación general de gentoo, como si se tratase de una instalación de archlinux. Y posterior a ello, el usuario pueda realizar una instalación personalizada y más profunda.
+Por último, estoy conciente que uno de los puntos fuertes de Gentoo es la compilación manual y personalizado de un kernel, pero en esta guía pretende que el usuario se familiarize con la instalación general de gentoo, y posterior a ello, el usuario pueda realizar una instalación personalizada y más profunda.
 
 ## **1. Crear Partciones, Sistema de Archivos y Formatear**
 
@@ -13,28 +13,28 @@ Por último, estoy conciente que uno de los puntos fuertes de Gentoo es la compi
 **NOTA:** Si el disco no cuenta con tabla de particiones seleccione GPT (GUID Partition Table).
 
 ```
-dev/sda1; Tipo: Efi system; Tamaño: 150M
-dev/sda2; Tipo: Linux swap; Tamaño: 2G
-dev/sda3; Tipo: Linux file system; Tamaño: Resto del disco
+dev/sdb1; Tipo: Efi system; Tamaño: 150M
+dev/sdb2; Tipo: Linux swap; Tamaño: 2G
+dev/sdb3; Tipo: Linux file system; Tamaño: Resto del disco
 ```
 
 ### Formateo de particiones
 
-`mkfs.fat -F 32 /dev/sda1`
+`mkfs.fat -F 32 /dev/sdb1`
 
-`mkswap /dev/sda2`
+`mkswap /dev/sdb2`
 
-`mkfs.ext4 /dev/sda3`
+`mkfs.ext4 /dev/sdb3`
 
 ### Montaje de partición swap y gentoo
 
-`swapon /dev/sda2`
+`swapon /dev/sdb2`
 
-`mount /dev/sda3 /mnt/gentoo`
+`mount /dev/sdb3 /mnt/gentoo`
 
 ## **2. Instalar el Stage comprimido y Enjaulamiento**
 
-`date 061222002021`
+`date 071509002021`
 
 **NOTA:** El formato para introducir la fecha es: MMddHHmmYYYY. En este ejemplo se setea: Junio 06 2021, Hora: 10:00 p.m.
 
@@ -79,7 +79,7 @@ ACCEPT_LICENSE="* -@EULA"
 
 ### **Montar partición de arranque**
 
-`mount /dev/sda1 /boot`
+`mount /dev/sdb1 /boot`
 
 ## **3. Configurar Portage y Elegir perfil**
 
@@ -108,7 +108,7 @@ ACCEPT_LICENSE="* -@EULA"
 
 `eselect locale set 4`
 
-**NOTA:** De igual manera, cambia el valor "4" por el correspondiente.
+**NOTA:** De igual manera, cambie el valor "4" por el deseado.
 
 
 ## **5. Configurar el Nucleo Linux y Fstab**
@@ -121,15 +121,11 @@ ACCEPT_LICENSE="* -@EULA"
 
 ### **(Opcional) sólo en caso que no aparezca enlace simbólico**
 
-`cd /usr/src`
+`eselect kernel list`
 
-`ls`
+`eselect kernel set 1`
 
-`ln -s linux-5.10.27-gentoo linux`
-
-`cd`
-
-**NOTA:** Sustituya "linux-5.10.27-gentoo" por el valor que arroje el comando "ls".
+**NOTA:** Sustituya el valor "1" por el deseado en caso de ser necesario.
 
 ### **Compilación del núcleo linux**
 
@@ -145,9 +141,9 @@ ACCEPT_LICENSE="* -@EULA"
 
 ```
 -* archivo fstab *-
-/dev/sda1  boot  vfat  noatime  0 0
-/dev/sda2  none  swap  sw       0 0
-/dev/sda3  /     ext4  noatime  0 1
+/dev/sdb1  boot  vfat  noatime  0 0
+/dev/sdb2  none  swap  sw       0 0
+/dev/sdb3  /     ext4  noatime  0 1
 ```
 
 
@@ -178,15 +174,14 @@ localhost="gentoo"
 
 ```
 -* archivo hosts *-
-127.0.0.1 localhost
-127.0.1.1 gentoo
+127.0.0.1 gentoo.redhogar gentoo localhost
 ```
 
 `nano -w /etc/conf.d/net`
 
 ```
 -* archivo net *-
-config_eth0=”dhcp”
+config_eth0="dhcp"
 ```
 
 `nano -w /etc/conf.d/hwclock`
@@ -206,16 +201,16 @@ keymap="es"
 
 ### **8. Instalar Herramientas**
 
-`emerge -av net-misc/dhcpcd`
-
 `emerge -av sys-apps/pciutils`
 
-`emerge -av app-admin/sudo`
 
+`emerge -av net-misc/dhcpcd`
 
-`emerge -av net-wireless wpa_supplicant`
+`emerge -av net-wireless/iw`
 
-**NOTA:** wpa_supplicant para uso de red wifi.
+`emerge -av net-wireless/wpa_supplicant`
+
+**NOTA:** iw y wpa_supplicant para uso de red wifi.
 
 
 ### **9. Password ROOT y salir del sistema**
