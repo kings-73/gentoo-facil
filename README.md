@@ -8,7 +8,7 @@ Por último, estoy conciente que uno de los puntos fuertes de Gentoo es la compi
 
 ## **1. Crear Partciones, Sistema de Archivos y Formatear**
 
-`cfdisk /dev/sda`
+`cfdisk /dev/sdb`
 
 **NOTA:** Si el disco no cuenta con tabla de particiones seleccione GPT (GUID Partition Table).
 
