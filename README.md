@@ -53,6 +53,7 @@ dev/sdb3; Tipo: Linux file system; Tamaño: Resto del disco
 COMMON_CFLAGS="-march=native -O2 -pipe"
 MAKEOPTS="-j5"
 ACCEPT_LICENSE="* -@EULA"
+GRUB_PLATFORMS="efi-64"
 ```
 
 **NOTA:** La licencia "EULA" permitirá instalar linux-firmware que tontiene drivers no libres.
@@ -148,11 +149,6 @@ ACCEPT_LICENSE="* -@EULA"
 
 
 ### **6. Instalacion de GRUB EFI**
-
-`echo 'GRUB_PLATFORMS="efi-64"' > /etc/portage/make.conf`
-
-**NOTA:** Si desea comprobar que el texto fue escrito en make.conf escriba: `cat /etc/portage/make.conf`
-
 
 `emerge -av sys-boot/grub:2`
 
