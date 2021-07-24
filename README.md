@@ -6,7 +6,7 @@ Para esta guía se infiere que el disco duro para la instalación será /dev/sdb
 
 Por último, estoy conciente que uno de los puntos fuertes de Gentoo es la compilación manual y personalizado de un kernel, pero en esta guía pretende que el usuario se familiarize con la instalación general de gentoo, y posterior a ello, el usuario pueda realizar una instalación personalizada y más profunda.
 
-## **1. Crear Partciones, Sistema de Archivos y Formatear**
+## **1. Crear Partciones, Formatear y Montar**
 
 `cfdisk /dev/sdb`
 
