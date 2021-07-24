@@ -157,7 +157,7 @@ GRUB_PLATFORMS="efi-64"
 `grub-mkconfig -o /boot/grub/grub.cfg`
 
 
-### **7. Configurar Red, Reloj y teclado**
+### **7. Archivos de configuración**
 
 `nano -w /etc/conf.d/hostname`
 
@@ -171,13 +171,6 @@ localhost="gentoo"
 ```
 -* archivo hosts *-
 127.0.0.1 gentoo.redhogar gentoo localhost
-```
-
-`nano -w /etc/conf.d/net`
-
-```
--* archivo net *-
-config_eth0="dhcp"
 ```
 
 `nano -w /etc/conf.d/hwclock`
@@ -196,9 +189,6 @@ keymap="es"
 
 
 ### **8. Instalar Herramientas**
-
-`emerge -av sys-apps/pciutils`
-
 
 `emerge -av net-misc/dhcpcd`
 
