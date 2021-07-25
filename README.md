@@ -58,7 +58,7 @@ GRUB_PLATFORMS="efi-64"
 
 **NOTA:** La licencia "EULA" permitirá instalar linux-firmware que tontiene drivers no libres.
 
-## **3. Instalar el Stage comprimido y Enjaulamiento**
+## **3. Enjaulamiento**
 
 `cp --dereference /etc/resolv.conf /mnt/gentoo/etc/`
 
