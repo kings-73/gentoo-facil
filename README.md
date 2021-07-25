@@ -32,7 +32,7 @@ dev/sdb3; Tipo: Linux file system; Tamaño: Resto del disco
 
 `mount /dev/sdb3 /mnt/gentoo`
 
-## **2. Instalar el Stage comprimido y Enjaulamiento**
+## **2. Instalar el Stage comprimido**
 
 `date 071509002021`
 
@@ -58,6 +58,8 @@ GRUB_PLATFORMS="efi-64"
 
 **NOTA:** La licencia "EULA" permitirá instalar linux-firmware que tontiene drivers no libres.
 
+## **3. Instalar el Stage comprimido y Enjaulamiento**
+
 `cp --dereference /etc/resolv.conf /mnt/gentoo/etc/`
 
 `mount --types proc /proc /mnt/gentoo/proc`
@@ -82,7 +84,7 @@ GRUB_PLATFORMS="efi-64"
 
 `mount /dev/sdb1 /boot`
 
-## **3. Configurar Portage y Elegir perfil**
+## **4. Configurar Portage y Elegir perfil**
 
 `emerge-webrsync -v`
 
@@ -94,8 +96,7 @@ GRUB_PLATFORMS="efi-64"
 
 **NOTA:** Cambia el valor "5" por el deseado.
 
-
-## **4. Zona Horaria**
+## **5. Zona Horaria**
 
 `echo "America/Mexico_City" > /etc/timezone`
 
@@ -111,8 +112,7 @@ GRUB_PLATFORMS="efi-64"
 
 **NOTA:** De igual manera, cambie el valor "4" por el deseado.
 
-
-## **5. Configurar el Nucleo Linux y Fstab**
+## **6. Configurar el Nucleo Linux**
 
 `emerge --ask sys-kernel/gentoo-sources`
 
@@ -138,6 +138,8 @@ GRUB_PLATFORMS="efi-64"
 
 **NOTA:** genkernel all para compilación completa (nuevos usuarios) ó genkernel --menuconfig all para usuarios experimentados que conozcan su harwware.
 
+### **7. Archivos de configuración**
+
 `nano -w /etc/fstab`
 
 ```
@@ -146,18 +148,6 @@ GRUB_PLATFORMS="efi-64"
 /dev/sdb2  none  swap  sw       0 0
 /dev/sdb3  /     ext4  noatime  0 1
 ```
-
-
-### **6. Instalacion de GRUB EFI**
-
-`emerge -av sys-boot/grub:2`
-
-`grub-install --target=x86_64-efi --efi-directory=/boot`
-
-`grub-mkconfig -o /boot/grub/grub.cfg`
-
-
-### **7. Archivos de configuración**
 
 `nano -w /etc/conf.d/hostname`
 
@@ -187,19 +177,21 @@ clock="local"
 keymap="es"
 ```
 
+### **8. Instalacion de GRUB EFI**
 
-### **8. Instalar Herramientas**
+`emerge -av sys-boot/grub:2`
+
+`grub-install --target=x86_64-efi --efi-directory=/boot`
+
+`grub-mkconfig -o /boot/grub/grub.cfg`
+
+### **9. Instalar Herramientas**
 
 `emerge -av net-misc/dhcpcd`
 
-`emerge -av net-wireless/iw`
+`emerge -av gentoolkit`
 
-`emerge -av net-wireless/wpa_supplicant`
-
-**NOTA:** iw y wpa_supplicant para uso de red wifi.
-
-
-### **9. Password ROOT y salir del sistema**
+### **10. Password ROOT y salir del sistema**
 
 `passwd`
 
