@@ -42,7 +42,7 @@ dev/sda3; Tipo: Linux file system; Tamaño: Resto del disco
 
 `wget https://bouncer.gentoo.org/fetch/root/all/releases/amd64/autobuilds/20210711T170538Z/stage3-amd64-openrc-20210711T170538Z.tar.xz`
 
-`tar -xvf stage3-amd64-openrc-20210711T170538Z.tar.xz --numeric-owner --xattrs-include="*.*"`
+`tar -xpf stage3-amd64-openrc-20210711T170538Z.tar.xz --numeric-owner --xattrs-include="*.*"`
 
 **NOTA:** Sustituya el * por el nombre completo del stage.
 
