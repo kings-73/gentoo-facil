@@ -8,35 +8,35 @@ Por último, estoy conciente que uno de los puntos fuertes de Gentoo es la compi
 
 ## **1. Preparando el disco**
 
-`cfdisk /dev/sdb`
+`cfdisk /dev/sda`
 
 **NOTA:** Si el disco no cuenta con tabla de particiones seleccione GPT (GUID Partition Table).
 
 ```
-dev/sdb1; Tipo: Efi system; Tamaño: 150M
-dev/sdb2; Tipo: Linux swap; Tamaño: 2G
-dev/sdb3; Tipo: Linux file system; Tamaño: Resto del disco
+dev/sda1; Tipo: Efi system; Tamaño: 150M
+dev/sda2; Tipo: Linux swap; Tamaño: 2G
+dev/sda3; Tipo: Linux file system; Tamaño: Resto del disco
 ```
 
 ### Formateo de particiones
 
-`mkfs.fat -F 32 /dev/sdb1`
+`mkfs.fat -F 32 /dev/sda1`
 
-`mkswap /dev/sdb2`
+`mkswap /dev/sda2`
 
-`mkfs.ext4 /dev/sdb3`
+`mkfs.ext4 /dev/sda3`
 
 ### Montaje de partición swap y gentoo
 
-`swapon /dev/sdb2`
+`swapon /dev/sda2`
 
-`mount /dev/sdb3 /mnt/gentoo`
+`mount /dev/sda3 /mnt/gentoo`
 
 ## **2. Instalar el Stage comprimido**
 
 `date 071509002021`
 
-**NOTA:** El formato para introducir la fecha es: MMddHHmmYYYY. En este ejemplo se setea: Junio 06 2021, Hora: 10:00 p.m.
+**NOTA:** El formato para introducir la fecha es: MMDDhhmmYYYY. En este ejemplo se setea: Junio 06 2021, Hora: 10:00 p.m.
 
 `cd /mnt/gentoo`
 
@@ -82,7 +82,7 @@ GRUB_PLATFORMS="efi-64"
 
 ### **Montar partición de arranque**
 
-`mount /dev/sdb1 /boot`
+`mount /dev/sda1 /boot`
 
 ## **4. Configurar Portage y Elegir perfil**
 
@@ -144,9 +144,9 @@ GRUB_PLATFORMS="efi-64"
 
 ```
 -* archivo fstab *-
-/dev/sdb1  boot  vfat  noatime  0 0
-/dev/sdb2  none  swap  sw       0 0
-/dev/sdb3  /     ext4  noatime  0 1
+/dev/sda1  boot  vfat  noatime  0 0
+/dev/sda2  none  swap  sw       0 0
+/dev/sda3  /     ext4  noatime  0 1
 ```
 
 `nano -w /etc/conf.d/hostname`
@@ -161,6 +161,7 @@ localhost="gentoo"
 ```
 -* archivo hosts *-
 127.0.0.1 gentoo.redhogar gentoo localhost
+::1 gentoo
 ```
 
 `nano -w /etc/conf.d/hwclock`
