@@ -6,7 +6,7 @@ Para esta guía se infiere que el disco duro para la instalación será /dev/sdb
 
 Por último, estoy conciente que uno de los puntos fuertes de Gentoo es la compilación manual y personalizado de un kernel, pero en esta guía pretende que el usuario se familiarize con la instalación general de gentoo, y posterior a ello, el usuario pueda realizar una instalación personalizada y más profunda.
 
-## **0. Preparando el disco**
+## **0. Conexión a Wi-Fi**
 
 Un método sencillo para conectarnos al Wi-Fi es con net-setup. Pero debe tener en cuenta que necesita de tres datos importantes:
 
@@ -23,6 +23,8 @@ Una vez que cuente con el nombre del dispositivo de red, proceda a ejecutar net-
 `net-setup INTERFAZ`
 
 **NOTA:** No se olvide de cambiar la palabra INTERFAZ por el nombre del dispositivo de red que obtuvo con iwconfig.
+
+Si no es posible conectarse con este método, puede también hacerlo por medio de USB compartiendo internet desde su dispositivo Android. De esta manera no necesita realizar configuraciones adicionales.
 
 ## **1. Preparando el disco**
 
