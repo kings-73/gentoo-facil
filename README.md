@@ -6,6 +6,24 @@ Para esta guía se infiere que el disco duro para la instalación será /dev/sdb
 
 Por último, estoy conciente que uno de los puntos fuertes de Gentoo es la compilación manual y personalizado de un kernel, pero en esta guía pretende que el usuario se familiarize con la instalación general de gentoo, y posterior a ello, el usuario pueda realizar una instalación personalizada y más profunda.
 
+## **0. Preparando el disco**
+
+Un método sencillo para conectarnos al Wi-Fi es con net-setup. Pero debe tener en cuenta que necesita de tres datos importantes:
+
+1. Nombre del dispositivo de red inalámbrica (INTERFAZ)
+2. El nombre de nuestra red Wi-Fi (SSID)
+3. La contraseña de red (PASSWOWRD)
+
+Los datos 2 y 3 son proporcionados por su proveedor de internet. En caso de tenerlos a la mano. Sólo falta saber el nombre de nuestra interfaz de red con el siguiente comando:
+
+`iwconfig`
+
+Una vez que cuente con el nombre del dispositivo de red, proceda a ejecutar net-setup añadiendo el nombre de la interfaz:
+
+`net-setup INTERFAZ`
+
+**NOTA:** No se olvide de cambiar la palabra INTERFAZ por el nombre del dispositivo de red que obtuvo con iwconfig.
+
 ## **1. Preparando el disco**
 
 `cfdisk /dev/sda`
