@@ -34,7 +34,7 @@ Si no es posible conectarse con este método, puede también hacerlo por medio d
 
 ```
 dev/sda1; Tipo: Efi system; Tamaño: 150M
-dev/sda2; Tipo: Linux swap; Tamaño: 2G
+dev/sda2; Tipo: Linux file system; Tamaño: 15G
 dev/sda3; Tipo: Linux file system; Tamaño: Resto del disco
 ```
 
@@ -42,15 +42,17 @@ dev/sda3; Tipo: Linux file system; Tamaño: Resto del disco
 
 `mkfs.fat -F 32 /dev/sda1`
 
-`mkswap /dev/sda2`
+`mkfs.ext4 /dev/sda2`
 
 `mkfs.ext4 /dev/sda3`
 
 ### Montaje de partición swap y gentoo
 
-`swapon /dev/sda2`
+`mount /dev/sda2 /mnt/gentoo`
 
-`mount /dev/sda3 /mnt/gentoo`
+`mkdir -p /mnt/gentoo/home`
+
+`mount /dev/sda3 /mnt/gentoo/home`
 
 ## **2. Instalar el Stage comprimido**
 
@@ -60,9 +62,9 @@ dev/sda3; Tipo: Linux file system; Tamaño: Resto del disco
 
 `cd /mnt/gentoo`
 
-`wget https://bouncer.gentoo.org/fetch/root/all/releases/amd64/autobuilds/20210711T170538Z/stage3-amd64-openrc-20210711T170538Z.tar.xz`
+`links www.gentoo.org/downloads`
 
-`tar -xpf stage3-amd64-openrc-20210711T170538Z.tar.xz --numeric-owner --xattrs-include="*.*"`
+`tar -xpf stage3-amd64-openrc-*.tar.xz --numeric-owner --xattrs-include="*.*"`
 
 **NOTA:** Sustituya el * por el nombre completo del stage.
 
@@ -71,8 +73,7 @@ dev/sda3; Tipo: Linux file system; Tamaño: Resto del disco
 ```
 -* archivo make.conf *-
 COMMON_CFLAGS="-march=native -O2 -pipe"
-MAKEOPTS="-j5"
-ACCEPT_LICENSE="* -@EULA"
+MAKEOPTS="-j4"
 GRUB_PLATFORMS="efi-64"
 ```
 
