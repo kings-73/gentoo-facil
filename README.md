@@ -74,7 +74,12 @@ dev/sda3; Tipo: Linux file system; Tamaño: Resto del disco
 -* archivo make.conf *-
 COMMON_CFLAGS="-march=native -O2 -pipe"
 MAKEOPTS="-j4"
+
 GRUB_PLATFORMS="efi-64"
+VIDEO_CARDS="intel i965 iris"
+
+L10N="es-MX es"
+USE="elogind networkmanager -systemd -qt5"
 ```
 
 **NOTA:** La licencia "EULA" permitirá instalar linux-firmware que tontiene drivers no libres.
@@ -113,9 +118,9 @@ GRUB_PLATFORMS="efi-64"
 
 `eselect profile list`
 
-`eselect profile set 5`
+`eselect profile set X`
 
-**NOTA:** Cambia el valor "5" por el deseado.
+**NOTA:** Sustituya la X por el número del perfil deseado.
 
 ## **5. Zona Horaria**
 
