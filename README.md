@@ -1,10 +1,11 @@
 # Guía de instalación Gentoo lo más sencilla posible
-Esta guía proporciona los pasos para una instalación gentoo, lo más sencilla y genérica posible. La arquitectura será 64bits y para un arranque EFI.
-Se utilizará el demonio OpenRC y no Systemd debido a que en Gentoo se usa por default, y no por preferencia personal. Así mismo el perfil de escritorio será el "default" y no gnome o kde, para poder decidir más adelante el escritorio de su preferencia.
+Esta guía proporciona los pasos para una instalación gentoo, lo más sencilla y genérica posible. La arquitectura del equipo será de 64bits. Por otro lado el modo de arranque será EFI.
 
-Para esta guía se infiere que el disco duro para la instalación será /dev/sdb.
+Respecto al sistema de inicio usaremos el preferido de Gentoo que es OpenRC, ya que el handbook proporciona una guía detallada para este init.
 
-Por último, estoy conciente que uno de los puntos fuertes de Gentoo es la compilación manual y personalizado de un kernel, pero en esta guía pretende que el usuario se familiarize con la instalación general de gentoo, y posterior a ello, el usuario pueda realizar una instalación personalizada y más profunda.
+A su vez, para esta guía se usará el disco duro "/dev/sda" para la instalación.
+
+Por último, estoy conciente que uno de los puntos fuertes de Gentoo es la compilación manual y personalizado de un kernel, pero en esta guía pretende que el usuario se familiarize con la instalación general de gentoo, y posterior a ello, el usuario pueda realizar la compilación del kernel con gentoo ya funcionando.
 
 ## **0. Conexión a Wi-Fi**
 
@@ -14,17 +15,15 @@ Un método sencillo para conectarnos al Wi-Fi es con net-setup. Pero debe tener 
 2. El nombre de nuestra red Wi-Fi (SSID)
 3. La contraseña de red (PASSWOWRD)
 
-Los datos 2 y 3 son proporcionados por su proveedor de internet. En caso de tenerlos a la mano. Sólo falta saber el nombre de nuestra interfaz de red con el siguiente comando:
+Escribimos el comando:
 
-`iwconfig`
+`net-setup`
 
-Una vez que cuente con el nombre del dispositivo de red, proceda a ejecutar net-setup añadiendo el nombre de la interfaz:
+En esta guía introduciremos datos como: El nombre del SSID al que nos conectaremos, el tipo de contraseña que usa, la contraseña como tal y si queremos usar DHCP automático. Una vez finalizando los datos podemos verificar nuestra conexión con:
 
-`net-setup INTERFAZ`
+`ping -c3 www.gentoo.org`
 
-**NOTA:** No se olvide de cambiar la palabra INTERFAZ por el nombre del dispositivo de red que obtuvo con iwconfig.
-
-Si no es posible conectarse con este método, puede también hacerlo por medio de USB compartiendo internet desde su dispositivo Android. De esta manera no necesita realizar configuraciones adicionales.
+**NOTA:** Si no es posible conectarse con este método, puede también hacerlo por medio de USB compartiendo internet desde su dispositivo Android. De esta manera no necesita realizar configuraciones adicionales.
 
 ## **1. Preparando el disco**
 
@@ -34,25 +33,20 @@ Si no es posible conectarse con este método, puede también hacerlo por medio d
 
 ```
 dev/sda1; Tipo: Efi system; Tamaño: 150M
-dev/sda2; Tipo: Linux file system; Tamaño: 15G
-dev/sda3; Tipo: Linux file system; Tamaño: Resto del disco
+dev/sda2; Tipo: Linux file system; Resto del disco
 ```
 
-### Formateo de particiones
+### Formateo de particiones y montaje de la partición raíz
 
 `mkfs.fat -F 32 /dev/sda1`
 
 `mkfs.ext4 /dev/sda2`
 
-`mkfs.ext4 /dev/sda3`
 
-### Montaje de partición swap y gentoo
 
 `mount /dev/sda2 /mnt/gentoo`
 
-`mkdir -p /mnt/gentoo/home`
 
-`mount /dev/sda3 /mnt/gentoo/home`
 
 ## **2. Instalar el Stage comprimido**
 
@@ -73,13 +67,12 @@ dev/sda3; Tipo: Linux file system; Tamaño: Resto del disco
 ```
 -* archivo make.conf *-
 COMMON_CFLAGS="-march=native -O2 -pipe"
-MAKEOPTS="-j4"
+MAKEOPTS="-j2"
 
 GRUB_PLATFORMS="efi-64"
-VIDEO_CARDS="intel i965 iris"
 
 L10N="es-MX es"
-USE="elogind networkmanager -systemd -qt5"
+USE="elogind networkmanager -systemd"
 ```
 
 **NOTA:** La licencia "EULA" permitirá instalar linux-firmware que tontiene drivers no libres.
@@ -116,9 +109,7 @@ USE="elogind networkmanager -systemd -qt5"
 
 `emerge --ask --sync --quiet`
 
-`eselect profile list`
-
-`eselect profile set X`
+`emerge --ask --verbose --update --deep --newuse @world`
 
 **NOTA:** Sustituya la X por el número del perfil deseado.
 
@@ -138,31 +129,13 @@ USE="elogind networkmanager -systemd -qt5"
 
 **NOTA:** De igual manera, cambie el valor "4" por el deseado.
 
-## **6. Configurar el Nucleo Linux**
+## **6. Instalar un kernel binario y el firmware no libre**
 
-`emerge --ask sys-kernel/gentoo-sources`
+`emerge --ask sys-kernel/gentoo-kernel-bin`
 
-`ls -l /usr/src/linux`
-
-**NOTA:** el comando "ls -l" muestra el enlace simbólico a linux hecho por portage. En caso de no tenerlo realizarlo manualmente con los siguientes comandos:
-
-### **(Opcional) sólo en caso que no aparezca enlace simbólico**
-
-`eselect kernel list`
-
-`eselect kernel set 1`
-
-**NOTA:** Sustituya el valor "1" por el deseado en caso de ser necesario.
-
-### **Compilación del núcleo linux**
-
-`emerge --ask sys-kernel/genkernel`
+`echo "sys-kernel/linux-firmware @BINARY-REDISTRIBUTABLE" > /etc/portage/package.license`
 
 `emerge --ask sys-kernel/linux-firmware`
-
-`genkernel all` ó `genkernel --menuconfig all`
-
-**NOTA:** genkernel all para compilación completa (nuevos usuarios) ó genkernel --menuconfig all para usuarios experimentados que conozcan su harwware.
 
 ### **7. Archivos de configuración**
 
